@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "ProductType";
+    Layout = "~/Views/Shared/MainPageLayout.cshtml";
+}
+
+<h2>ProductType</h2>
+
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+<!-- Include one of jTable styles. -->
+<link href="/jtable/themes/metro/blue/jtable.min.css" rel="stylesheet" type="text/css" />
+ 
+<!-- Include jTable script file. -->
+<script src="/jtable/jquery.jtable.min.js" type="text/javascript"></script>
+
+<div id="ProductTypeTableContainer"></div>
+
+<script type="text/javascript">
+ 
+    $(document).ready(function () {
+ 
+        $('#ProductTypeTableContainer').jtable({
+            title: 'Product Types',
+            paging: true, //Enable paging
+            sorting: true, //Enable sorting
+            defaultSorting: 'Name ASC',
+            actions: {
+                listAction: '@Url.Action("ProductTypeList")',
+                createAction: '@Url.Action("CreateProductType")',
+                updateAction: '@Url.Action("UpdateProductType")',
+                deleteAction: '@Url.Action("DeleteProductType")',
+            },
+            fields: {
+                ProductTypeId: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                Name: {
+                    title: 'Product Type Name',
+                    width: '50%',
+                }
+            }
+        });
+ 
+        //Load student list from server
+        $('#ProductTypeTableContainer').jtable('load');
+ 
+    });
+ 
+</script>
