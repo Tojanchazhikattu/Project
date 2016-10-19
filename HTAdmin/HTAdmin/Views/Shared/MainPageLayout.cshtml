@@ -64,6 +64,7 @@
            @{Html.RenderPartial("Footer");}
       </div>
       <!-- /page content -->
+
        
     </div>
 
@@ -341,11 +342,15 @@
           });
       });
   </script>
+
+
+
   <script>
       NProgress.done();
   </script>
   <!-- /datepicker -->
   <!-- /footer content -->
+     @RenderSection("scripts", required: false)
 </body>
 
 </html>

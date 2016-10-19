@@ -5,3 +5,10 @@ D:\SanthoshProj\Project2\HTAdmin\htBLL\bin\Debug\htDAL.pdb
 D:\SanthoshProj\Project2\HTAdmin\htBLL\obj\Debug\htBLL.csprojResolveAssemblyReference.cache
 D:\SanthoshProj\Project2\HTAdmin\htBLL\obj\Debug\htBLL.dll
 D:\SanthoshProj\Project2\HTAdmin\htBLL\obj\Debug\htBLL.pdb
+D:\SanthoshProj\Project\HTAdmin\htBLL\bin\Debug\htBLL.dll
+D:\SanthoshProj\Project\HTAdmin\htBLL\bin\Debug\htBLL.pdb
+D:\SanthoshProj\Project\HTAdmin\htBLL\bin\Debug\htDAL.dll
+D:\SanthoshProj\Project\HTAdmin\htBLL\bin\Debug\htDAL.pdb
+D:\SanthoshProj\Project\HTAdmin\htBLL\obj\Debug\htBLL.csprojResolveAssemblyReference.cache
+D:\SanthoshProj\Project\HTAdmin\htBLL\obj\Debug\htBLL.dll
+D:\SanthoshProj\Project\HTAdmin\htBLL\obj\Debug\htBLL.pdb

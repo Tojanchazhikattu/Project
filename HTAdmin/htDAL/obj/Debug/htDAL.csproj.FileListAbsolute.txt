@@ -2,3 +2,7 @@ D:\SanthoshProj\Project2\HTAdmin\htDAL\bin\Debug\htDAL.dll
 D:\SanthoshProj\Project2\HTAdmin\htDAL\bin\Debug\htDAL.pdb
 D:\SanthoshProj\Project2\HTAdmin\htDAL\obj\Debug\htDAL.dll
 D:\SanthoshProj\Project2\HTAdmin\htDAL\obj\Debug\htDAL.pdb
+D:\SanthoshProj\Project\HTAdmin\htDAL\bin\Debug\htDAL.dll
+D:\SanthoshProj\Project\HTAdmin\htDAL\bin\Debug\htDAL.pdb
+D:\SanthoshProj\Project\HTAdmin\htDAL\obj\Debug\htDAL.dll
+D:\SanthoshProj\Project\HTAdmin\htDAL\obj\Debug\htDAL.pdb

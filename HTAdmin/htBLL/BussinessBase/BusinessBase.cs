@@ -532,6 +532,7 @@ namespace htBLL
 
         public void  MarkforUpdate()
         {
+            ValidationRuleList.CheckAll();
             _isNew = false;
             _isDirty = true;
         }

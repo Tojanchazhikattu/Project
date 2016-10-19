@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,8 +47,30 @@
     <Compile Include="BussinessBase\RuleMethods.cs" />
     <Compile Include="BussinessBase\ValidationRules.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Entities\BookService\CustomerInformation.cs" />
+    <Compile Include="Entities\BookService\DeviceDetails.cs" />
+    <Compile Include="Entities\BookService\EquipmentInformation.cs" />
+    <Compile Include="Entities\BookService\Repair.cs" />
+    <Compile Include="Entities\BookService\ServiceDetails.cs" />
+    <Compile Include="Entities\BookService\ServiceRepairMapping.cs" />
+    <Compile Include="Entities\BookService\ServiceRequest.cs" />
+    <Compile Include="Entities\BookService\UnLocking.cs" />
+    <Compile Include="Entities\HomePage\AssignedJobs.cs" />
+    <Compile Include="Entities\HomePage\ServiceRequestsComposite.cs" />
+    <Compile Include="Entities\MasterData\Colour.cs" />
+    <Compile Include="Entities\MasterData\DeviceType.cs" />
+    <Compile Include="Entities\MasterData\HandsetModel.cs" />
+    <Compile Include="Entities\MasterData\Network.cs" />
+    <Compile Include="Entities\MasterData\RepairType.cs" />
+    <Compile Include="Entities\MasterData\RequestStatus.cs" />
+    <Compile Include="Entities\MasterData\SearchChannel.cs" />
+    <Compile Include="Entities\MasterData\SmartDeviceRepair.cs" />
+    <Compile Include="Entities\MasterData\User.cs" />
+    <Compile Include="Entities\MasterData\UserType.cs" />
+    <Compile Include="Services\BookSmartDeviceService.cs" />
+    <Compile Include="Services\HomeService.cs" />
     <Compile Include="Services\ProductTypeServices.cs" />
-    <Compile Include="Entities\ProductType.cs" />
+    <Compile Include="Entities\MasterData\ProductType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\TypeHelper.cs" />
   </ItemGroup>
@@ -57,6 +80,7 @@
       <Name>htDAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

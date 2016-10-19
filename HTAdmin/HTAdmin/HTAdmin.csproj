@@ -162,14 +162,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Book\BookSmartDeviceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeftMenuController.cs" />
-    <Compile Include="Controllers\ProductType\ProductTypeController.cs" />
+    <Compile Include="Controllers\MasterData\ProductType\ProductTypeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AccountModels.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\RepairQuotes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +244,7 @@
     <Content Include="Common\css\icheck\flat\_all.css" />
     <Content Include="Common\css\ion.rangeSlider.css" />
     <Content Include="Common\css\ion.rangeSlider.skinFlat.css" />
+    <Content Include="Common\css\jquery.datetimepicker.css" />
     <Content Include="Common\css\maps\jquery-jvectormap-2.0.3.css" />
     <Content Include="Common\css\normalize.css" />
     <Content Include="Common\css\nprogress.css" />
@@ -346,6 +352,8 @@
     <Content Include="Common\js\icheck\icheck.min.js" />
     <Content Include="Common\js\input_mask\jquery.inputmask.js" />
     <Content Include="Common\js\ion_range\ion.rangeSlider.min.js" />
+    <Content Include="Common\js\jquery.datetimepicker.js" />
+    <Content Include="Common\js\jquery.datetimepicker.min.js" />
     <Content Include="Common\js\jquery.min.js" />
     <Content Include="Common\js\knob\jquery.knob.min.js" />
     <Content Include="Common\js\maps\gdp-data.js" />
@@ -883,10 +891,18 @@
     <Content Include="jtable\themes\jqueryui\jtable_jqueryui.less" />
     <Content Include="jtable\themes\basic\jtable_basic.less" />
     <Content Include="Views\ProductType\ProductType.cshtml" />
+    <Content Include="Views\BookSmartDevice\DeviceDetails.cshtml" />
+    <Content Include="Views\BookSmartDevice\EquipmentInformation.cshtml" />
+    <Content Include="Views\BookSmartDevice\CustomerInformation.cshtml" />
+    <Content Include="Views\BookSmartDevice\RepairQuotes.cshtml" />
+    <Content Include="Views\BookSmartDevice\UnLockingView.cshtml" />
+    <Content Include="Views\BookSmartDevice\RepairView.cshtml" />
+    <Content Include="Views\BookSmartDevice\RequestSaved.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\MasterData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -915,7 +931,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>60961</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:58102/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

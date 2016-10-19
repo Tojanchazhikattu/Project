@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using htBLL;
 
 namespace HTAdmin.Controllers
 {
@@ -12,21 +13,80 @@ namespace HTAdmin.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            return View();
+            return View("Index", new HomeModel());
         }
 
-        public ActionResult About()
+
+        [HttpPost]
+        public JsonResult GetNewRequestList(int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
         {
-            ViewBag.Message = "Your app description page.";
+            try
+            {
+                HomeService homeService = new HomeService();
 
-            return View();
+                var newRequests = homeService.GetNewRequests(RequestStatus.New);
+                var newRequestsCount = newRequests.Count;
+                string[] sortParms = jtSorting.Split(' ');
+                //var newRequestsSorted = homeService.SortObjectList(newRequests, sortParms[0], sortParms[1]);
+
+
+                return Json(new { Result = "OK", Records = newRequests, TotalRecordCount = newRequestsCount });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public JsonResult UpdateNewRequestList(ServiceRequestsComposite serviceRequestsComposite)
         {
-            ViewBag.Message = "Hello contact";
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Json(new { Result = "ERROR", Message = "Form is not valid! Please correct it and try again." });
+                }
+                HomeService homeService = new HomeService();
+                homeService.UpdateServiceRequest(serviceRequestsComposite);
 
-            return View();
+                return Json(new { Result = "OK" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
         }
+
+
+
+        [HttpPost]
+        public JsonResult GetRequestStatus()
+        {
+            try
+            {
+                HomeService homeService = new HomeService();
+                var requestStatus = homeService.GetRequestStatus().Select(c => new { DisplayText = c.Description, Value = c.RequestStatusID }); ;
+                return Json(new { Result = "OK", Options = requestStatus });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Your app description page.";
+
+        //    return View();
+        //}
+
+        //public ActionResult Contact()
+        //{
+        //    ViewBag.Message = "Hello contact";
+
+        //    return View();
+        //}
+
     }
 }
