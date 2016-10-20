@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "EquipmentInformation";
+    Layout = "~/Views/Shared/MainPageLayout.cshtml";
+     @model htBLL.EquipmentInformation
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+    <div class="x_title">
+        <h2>Equipment Information <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+
+        <!-- Smart Wizard -->
+        <p>Dummy text here</p>
+        <div id="wizard" class="form_wizard wizard_horizontal">
+            <ul class="wizard_steps">
+                <li>
+                <a href="#step-1">
+                    <span class="step_no">1</span>
+                    <span class="step_descr">
+                                    Device Details<br />
+                                    <small>Fill Device Details</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-2">
+                    <span class="step_no">2</span>
+                    <span class="step_descr">
+                                    Equipment Information<br />
+                                    <small>Fill Equipment Information</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-3">
+                    <span class="step_no">3</span>
+                    <span class="step_descr">
+                                    Customer Information<br />
+                                    <small>Fill Customer Information</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-4">
+                    <span class="step_no">4</span>
+                    <span class="step_descr">
+                                    Repair Quotes<br />
+                                    <small>Fill Repair Quotes</small>
+                                </span>
+                </a>
+                </li>
+            </ul>
+            <div id="divEquipmentInformation">
+                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
+                    @using (Html.BeginForm("SubmitEquipmentInformation", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                    {
+                   
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Handset</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+
+                    @Html.RadioButtonFor(model =>model.Handset,true,true) Yes 
+                    @Html.RadioButtonFor(model =>model.Handset,false,true) No 
+
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Simcard</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+
+                
+                    @Html.RadioButtonFor(model =>model.Simcard,true,true) Yes 
+                    @Html.RadioButtonFor(model =>model.Simcard,false,true) No 
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Memory Card<span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.RadioButtonFor(model =>model.MemoryCard,true,true) Yes 
+                    @Html.RadioButtonFor(model =>model.MemoryCard,false,true) No 
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Battery</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                     @Html.RadioButtonFor(model =>model.Battery,true,true) Yes 
+                    @Html.RadioButtonFor(model =>model.Battery,false,true) No 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Back Cover</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.RadioButtonFor(model =>model.BackCover,true,true) Yes 
+                    @Html.RadioButtonFor(model =>model.BackCover,false,true) No
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Other Accessories
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.OtherAccessories)
+
+                    </div>
+                </div>
+
+                </div>
+                
+               <div class="actionBar">
+                   <input name="submit" type="submit" id="Prev" class="btn btn-success"  value="Prev" />
+                 @*  <a href="#" class="btn btn-success">Next</a>*@
+                   <input name="submit" type="submit" id="Next" class="btn btn-success"  value="Next" />
+                  @* <a href="#" class="btn btn-primary buttonDisabled">Previous</a>*@
+               </div>
+                    }
+        
+
+            </div>
+
+
+         </div>
+        <div>
+
+        </div>
+    </div>
+    </div>
+</div>
+<script> 
+
+     
+</script>
+

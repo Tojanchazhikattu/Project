@@ -1,0 +1,239 @@
+﻿@{
+    ViewBag.Title = "DeviceDetails";
+    Layout = "~/Views/Shared/MainPageLayout.cshtml";
+    @model htBLL.DeviceDetails
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+    <div class="x_title">
+        <h2>Device Details <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+
+        <!-- Smart Wizard -->
+        <p>Dummy text here</p>
+        <div id="wizard" class="form_wizard wizard_horizontal">
+            <ul class="wizard_steps">
+                <li>
+                <a href="#step-1">
+                    <span class="step_no">1</span>
+                    <span class="step_descr">
+                                    Device Details<br />
+                                    <small>Fill Device Details</small>
+                                </span>
+                </a>
+                </li>
+                 <li>
+                <a href="#step-3">
+                    <span class="step_no">3</span>
+                    <span class="step_descr">
+                                    Customer Information<br />
+                                    <small>Customer Information</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-3">
+                    <span class="step_no">3</span>
+                    <span class="step_descr">
+                                    Step 3<br />
+                                    <small>Step 3 description</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-4">
+                    <span class="step_no">4</span>
+                    <span class="step_descr">
+                                    Repair Quotes<br />
+                                    <small>Fill Repair Quotes</small>
+                                </span>
+                </a>
+                </li>
+            </ul>
+            <div id="step-1">
+                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
+                    @using (Html.BeginForm("SubmitDeviceDetails", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                    {
+                       @Html.ValidationSummary(true)
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Device Type</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @*<select name="ddlDeviceType"  id="ddlDeviceType" class="select2_single form-control" 
+                    tabindex="-1" onchange="javascript:GetHandSetModel(this.value);"></select> *@
+                    @Html.DropDownListFor(x=> x.DeviceTypeID,
+                    new SelectList(
+                                  new List<Object>{ 
+                                       new { Value = "" , Text = "Select Device Type"  }
+                                  }, "Value","Text"
+                              ) ,new {@class = "select2_single form-control", Name = "DeviceTypeID"
+                                  ,id="DeviceTypeID" ,onchange="javascript:GetHandSetModel(this.value);" })
+                    @Html.ValidationMessageFor(model => model.DeviceTypeID)
+@*                    new SelectList(Model.lstSearchChannel, "SearchChannelId", "name"),"Select Channel",new {@class = "select2_single form-control" })*@
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Handset Model</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+
+               @* <select name="ddlHandSetModel" class="select2_single form-control" tabindex="-1" id="ddlHandSetModel"></select>*@
+                       @Html.DropDownListFor(x=> x.HandsetModelID,
+                    new SelectList(
+                                  new List<Object>{ 
+                                       new { Value = "" , Text = "Select Handset Model"  }
+                                  }, "Value","Text"
+                              ) ,new {@class = "select2_single form-control", Name = "HandsetModelID"
+                                  ,id="HandsetModelID"  })
+                    @Html.ValidationMessageFor(model => model.HandsetModelID)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Device Coluor<span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                   @* <select name="ddlColour" class="select2_single form-control" tabindex="-1" id="ddlColour">   </select>*@
+                         @Html.DropDownListFor(x=> x.DeviceColourID,
+                    new SelectList(
+                                  new List<Object>{ 
+                                       new { Value = "" , Text = "Select Device Colour"  }
+                                  }, "Value","Text"
+                              ) ,new {@class = "select2_single form-control", Name = "DeviceColourID"
+                                  ,id="DeviceColourID"  })
+                    @Html.ValidationMessageFor(model => model.DeviceColourID)
+                   
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">IMEI Number</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    @*<input id="imei-number" class="form-control col-md-7 col-xs-12" type="text" name="imei-number" value="@Model.IMEINo">*@
+                        @Html.TextBoxFor(model => model.IMEINo)
+                        @Html.ValidationMessageFor(model => model.IMEINo)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Pass Code</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+@*                    <input id="pass-code" class="form-control col-md-7 col-xs-12" type="text" name="pass-code" value="@Model.PassCode">*@
+                         @Html.TextBoxFor(model => model.PassCode) 
+                        @Html.ValidationMessageFor(model => model.PassCode)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Network<span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select name="ddlNetwork" class="select2_single form-control" tabindex="-1" id="ddlNetwork">
+                        </select>
+
+                    </div>
+                </div>
+
+                </div>
+                
+               <div class="actionBar">
+                 @*  <a href="#" class="btn btn-default buttonDisabled">Finish</a>*@
+                 @*  <a href="#" class="btn btn-success">Next</a>*@
+                   <input name="submit" type="submit" id="Next" class="btn btn-success"  value="Next" />
+                  @* <a href="#" class="btn btn-primary buttonDisabled">Previous</a>*@
+               </div>
+                    }
+        
+
+            </div>
+           @* <div id="step-2">
+            </div>
+            <div id="step-3">
+            </div>
+            <div id="step-4">
+            </div>*@
+
+         </div>
+        <div>
+
+        </div>
+    </div>
+    </div>
+</div>
+    @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    }
+<script> 
+    $(document).ready(function () {
+     $.getJSON('@Url.Action("GetDeviceTypes", "BookSmartDevice")', function (result) {
+         FillDropdown("DeviceTypeID", result.result, "Device Type")
+     });
+    $.getJSON('@Url.Action("GetHandSetModelSelected", "BookSmartDevice")', function (result) {
+        FillDropdown("HandsetModelID", result.result, "HandSet Model")
+    });
+    $.getJSON('@Url.Action("GetColours", "BookSmartDevice")', function (result) {
+        FillDropdown("DeviceColourID", result.result, "Colour")
+    });
+    $.getJSON('@Url.Action("GetNetworks", "BookSmartDevice")', function (result) {
+        FillDropdown("ddlNetwork", result.result, "Network")
+    });
+ });
+
+    // Generic code for any dropdown to fill called by ajax  
+    function FillDropdown(selector, vData,defaultValue) {
+        if (vData.length > 0) {
+            var vItems = [];
+            vItems.push("<option >Selected " + defaultValue + "</option>");
+            for (var i in vData) {
+                if (vData[i].Selected) {
+                   
+                    vItems.push('<option selected value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+                }
+                else
+                    vItems.push('<option value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+            }
+            $('#' + selector).empty();
+            $('#' + selector).append(vItems.join(''));
+            return true;
+        }
+        else {
+            $('#' + selector).empty();
+            return false;
+        }
+    }
+
+    function GetHandSetModel(_deviceTypeId) {
+       
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#HandsetModelID").html(procemessage).show();
+        var url = "@Url.Action("GetHandSetModel", "BookSmartDevice")";
+
+        $.ajax({
+            url: url,
+            data: { deviceTypeId: _deviceTypeId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select HandSet Model</option>";
+                //alert(data.result.length);
+                for (var x = 0; x < data.result.length; x++) {
+                    markup += "<option value=" + data.result[x].Value + ">" + data.result[x].Text + "</option>";
+                }
+                $("#HandsetModelID").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+     
+</script>
+
+

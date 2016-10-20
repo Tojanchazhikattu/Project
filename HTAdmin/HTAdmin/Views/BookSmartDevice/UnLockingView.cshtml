@@ -1,0 +1,47 @@
+﻿@{
+
+     @model HTAdmin.RepairQuotes
+}
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Unlocking Cost</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        @Html.TextBoxFor(model => model.serviceDetails.UnlockingCost)
+    </div>
+</div>
+ <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Did customer made advance payment?</label>
+    <div >
+   @Html.DropDownListFor(x=> x.serviceDetails.AdancePayment,new SelectList(new [] 
+        {
+            new { ID = false, Name = "No" },
+            new { ID = true, Name = "Yes" }
+        }, "ID", "Name"),new {id= "ddlRepairType", @class = ""})
+    </div>
+</div>
+ <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Advance Payment</label>
+    <div >
+        @Html.TextBoxFor(model => model.serviceDetails.AdancePaymentAmount)
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Collection Date/Time</label>
+     <div class="col-md-9 col-sm-9 col-xs-12">
+      @Html.TextBoxFor(model => model.serviceDetails.CollectionDateTime, new { type="datetime-local" , id= "CollectionDateTime"})
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Message To Engineer</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      @Html.TextAreaFor(model => model.serviceDetails.MessageToEngineer)
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Assigned Engineer</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+    @Html.DropDownListFor(x=> x.serviceDetails.EngineerUserId,new SelectList(Model.lstEngineers, "UserId", "UserName"),"Select Engineer"
+                     ,new {id= "ddlRepairType", @class = "select2_single form-control"})
+    </div>
+</div>
+

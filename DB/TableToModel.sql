@@ -1,4 +1,4 @@
-DECLARE @TableName VARCHAR(MAX) = 'ProductType' -- Replace 'NewsItem' with your table name
+DECLARE @TableName VARCHAR(MAX) = 'DeviceType' -- Replace 'NewsItem' with your table name
 DECLARE @TableSchema VARCHAR(MAX) = 'dbo' -- Replace 'Markets' with your schema name
 DECLARE @result varchar(max) = ''
 declare @pk varchar(max)
@@ -266,7 +266,7 @@ SET @result = @result + CHAR(13) + '#endregion Delete()' + CHAR(13)
 SET @result = @result + CHAR(13) + '#region Add()' + CHAR(13)  
 
 --SET @result = @result + 'protected override DataRow Add(int '+@pk+')' + CHAR(13)  
-SET @result = @result + 'protected override void Add()' + CHAR(13)  
+SET @result = @result + 'protected override int Add()' + CHAR(13)  
 
 SET @result = @result  + '{' + CHAR(13)
 
@@ -285,6 +285,7 @@ FROM
 select c.COLUMN_NAME,c.DATA_TYPE,dbo.ufGetColumnCharLength(@TableName,c.COLUMN_NAME) as Leng, c.ORDINAL_POSITION 
 FROM  INFORMATION_SCHEMA.COLUMNS c
 WHERE   c.TABLE_NAME = @TableName and ISNULL(@TableSchema, c.TABLE_SCHEMA) = c.TABLE_SCHEMA  
+ AND  COLUMN_NAME!=@PK
 ) t
 ORDER BY t.ORDINAL_POSITION
 
@@ -292,12 +293,13 @@ ORDER BY t.ORDINAL_POSITION
 SET @result = @result  + '};' + CHAR(13)
 
 SELECT @result = @result + CHAR(13) 
-+ 'parameters['+ CAST ( t.ORDINAL_POSITION-1 AS varchar(2) )  +'].Value = (object)'+ t.COLUMN_NAME +'?? DBNull.Value;'
++ 'parameters['+ CAST ( t.ORDINAL_POSITION-2 AS varchar(2) )  +'].Value = (object)'+ t.COLUMN_NAME +'?? DBNull.Value;'
 FROM  
 (
 select c.COLUMN_NAME,c.DATA_TYPE,dbo.ufGetColumnCharLength(@TableName,c.COLUMN_NAME) as Leng, c.ORDINAL_POSITION 
 FROM  INFORMATION_SCHEMA.COLUMNS c
 WHERE   c.TABLE_NAME = @TableName and ISNULL(@TableSchema, c.TABLE_SCHEMA) = c.TABLE_SCHEMA  
+AND  COLUMN_NAME!=@PK
 ) t
 ORDER BY t.ORDINAL_POSITION
 
@@ -307,8 +309,16 @@ SET @result = @result + CHAR(13) + 'try{' + CHAR(13)
 
 SET @result = @result + '		OpenDatabase();' + CHAR(13)
 
+SET @result = @result + '		object returnObj=DataBase.QuerySingleValue("sp_Add'+ @TableName+'", parameters);' + CHAR(13)
+SET @result = @result + '		int new'+@pk+';'+ CHAR(13)
+SET @result = @result + '		if (Int32.TryParse(returnObj.ToString(), out new'+ @pk +'))'+ CHAR(13)
+SET @result = @result + CHAR(13) + '{' + CHAR(13)
+SET @result = @result + CHAR(13) + 'return new'+@pk +';' + CHAR(13)
+                
 
-SET @result = @result +  '		DataBase.RunNonQuery("spAdd'+ @TableName+'", parameters);' + CHAR(13)
+SET @result = @result + CHAR(13) + '}' + CHAR(13)
+SET @result = @result + CHAR(13) + 'return 0;'+ CHAR(13)
+
 SET @result = @result + CHAR(13) + '}' + CHAR(13)
 
 SET @result = @result + CHAR(13) + 'finally{' + CHAR(13)
@@ -330,7 +340,7 @@ SET @result = @result + CHAR(13) + 'protected override void AddBusinessRules()' 
 SET @result = @result  + '{' + CHAR(13)
 
 SELECT @result = @result + CHAR(13) 
-+'ValidationRuleList.AddRule((new RuleMethods()).IsRequired, new RuleCritetia("'+COLUMN_NAME+'","'+COLUMN_NAME +' is required."));'
++'ValidationRuleList.AddRule((new RuleMethods()).IsRequired, new RuleCriteria("'+COLUMN_NAME+'","'+COLUMN_NAME +' is required."));'
 
 FROM  
 (

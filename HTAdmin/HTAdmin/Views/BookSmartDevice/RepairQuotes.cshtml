@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "RepairQuotes";
+    Layout = "~/Views/Shared/MainPageLayout.cshtml";
+    @model HTAdmin.RepairQuotes
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+    <div class="x_title">
+        <h2>Repair Quotes <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+
+        <!-- Smart Wizard -->
+        <p>Dummy text here</p>
+        <div id="wizard" class="form_wizard wizard_horizontal">
+            <ul class="wizard_steps">
+                <li>
+                <a href="#step-1">
+                    <span class="step_no">1</span>
+                    <span class="step_descr">
+                                    Device Details<br />
+                                    <small>Fill Device Details</small>
+                                </span>
+                </a>
+                </li>
+                 <li>
+                <a href="#step-3">
+                    <span class="step_no">3</span>
+                    <span class="step_descr">
+                                    Customer Information<br />
+                                    <small>Customer Information</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-3">
+                    <span class="step_no">3</span>
+                    <span class="step_descr">
+                                    Step 3<br />
+                                    <small>Step 3 description</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-4">
+                    <span class="step_no">4</span>
+                    <span class="step_descr">
+                                    Repair Quotes<br />
+                                    <small>Fill Repair Quotes</small>
+                                </span>
+                </a>
+                </li>
+            </ul>
+            <div id="step-4">
+                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
+                    @using (Html.BeginForm("SubmitRepairQuotes", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                    {
+                   
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Repair or Unlocking?</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                         @Html.DropDownListFor(x=> x.RepairTypeId,new SelectList(Model.lstRepairType, "RepairTypeId", "Name"),"Select RepairType"
+                         ,new {id= "ddlRepairType", @class = "select2_single form-control"})
+                    </div>
+                    </div>
+                    <div id="partialViewDiv">
+
+
+                    </div>
+                    </div>
+                
+                   <div class="actionBar">
+                      @* <a href="#" class="btn btn-default buttonDisabled">Finish</a>*@
+                       <input name="submit" type="submit" id="Prev" class="btn btn-success"  value="Previous" />
+                       <input name="submit" type="submit" id="Finish"  class="btn btn-success"  value="Finish" />
+                     @*  <a href="#" class="btn btn-success">Next</a>*@
+           @*         <input name="submit" type="submit" id="Previous"  class="btn btn-success"  value="Previous" />*@
+                      @* <a href="#" class="btn btn-primary buttonDisabled">Previous</a>*@
+                   </div>
+                    }
+        
+
+            </div>
+
+
+         </div>
+        <div>
+
+        </div>
+    </div>
+    </div>
+</div>
+<script> 
+    $(document).ready(function () {
+
+@*        $.getJSON('@Url.Action("GetRepairTypes", "BookSmartDevice")', function (result) {
+            FillDropdown("ddlDeviceType", result.result, "Device Type")
+        });*@
+
+        var dropDown = $('#ddlRepairType'); // assuming the ID of this element is 'TypeId'             
+        dropDown.change(function () {
+            //alert(dropDown.val());
+            populateView(dropDown.val());
+        });
+
+
+    });
+
+    function populateView(dropDownval) {
+        var url = "@Url.Action("GetRepairTypeView", "BookSmartDevice")";
+        if (dropDownval>0) {
+            $.ajax({
+                method: "GET",
+                cache: false,
+                url: url,
+                dataType: "HTML",
+                data: { selectedValue: dropDownval }
+            })
+        .done(function (response) { // jQuery 1.8 deprecates success() callback
+            var div = $('#partialViewDiv');
+            div.html('');
+            div.html(response);
+        });
+        }
+    }
+    
+    function FillDropdown(selector, vData, defaultValue) {
+        if (vData.length > 0) {
+            var vItems = [];
+            vItems.push("<option value='0'>Select " + defaultValue + "</option>");
+            for (var i in vData) {
+                if (vData[i].Selected)
+                    vItems.push('<option selectedselected=selected value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+                else
+                    vItems.push('<option value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+            }
+            $('#' + selector).empty();
+            $('#' + selector).append(vItems.join(''));
+            return true;
+        }
+        else {
+            $('#' + selector).empty();
+            return false;
+        }
+    }
+
+
+   
+     
+</script>
+
+

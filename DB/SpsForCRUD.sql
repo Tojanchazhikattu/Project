@@ -5,7 +5,7 @@
 -- Assign a blank string - '' for all tables or the table name for
 -- a single table.
 DECLARE @GenerateProcsFor varchar(100)
-SET @GenerateProcsFor = 'Engineer'
+SET @GenerateProcsFor = 'ServiceRequest'
 --SET @GenerateProcsFor = ''
 
 -- which database do we want to create the procs for?
@@ -168,6 +168,7 @@ WHILE @@FETCH_STATUS = 0 BEGIN
 					PRINT @SELECT
 					PRINT @UPSERT
 					PRINT @ADD
+					Print @DELETE
 				END ELSE BEGIN
 					EXEC sp_Executesql @LIST
 					EXEC sp_Executesql @SELECT

@@ -1,0 +1,37 @@
+﻿@{
+
+     @model HTAdmin.RepairQuotes
+}
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Repair Description</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        @Html.ListBoxFor(x => x.lstSelectedRepairs, new MultiSelectList(Model.slSmartDeviceRepair, "Value", "Text"), new { id = "ddlRepairType" })
+    </div>
+</div>
+ <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Other Repair</label>
+    <div >
+    @Html.TextAreaFor(model => model.serviceDetails.OtherRepair) € @Html.TextBoxFor(model => model.serviceDetails.OtherRepairCost)
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Collection Date/Time</label>
+     <div class="col-md-9 col-sm-9 col-xs-12">
+      @Html.TextBoxFor(model => model.serviceDetails.CollectionDateTime, new { type="datetime-local" , id= "CollectionDateTime"})
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Message To Engineer</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      @Html.TextAreaFor(model => model.serviceDetails.MessageToEngineer)
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Assigned Engineer</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+    @Html.DropDownListFor(x=> x.serviceDetails.EngineerUserId,new SelectList(Model.lstEngineers, "UserId", "UserName"),"Select Engineer"
+                     ,new {id= "ddlRepairType", @class = "select2_single form-control"})
+    </div>
+</div>
+

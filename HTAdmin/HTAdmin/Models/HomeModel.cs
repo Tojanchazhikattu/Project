@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using htBLL;
+using System.Web.Mvc;
+
+namespace HTAdmin
+{
+    public class HomeModel
+    {
+        public IList<AssignedJobs> lstAssignedJobs { get; set; }
+
+        public HomeModel()
+        {
+            HomeService homeService= new HomeService();
+            lstAssignedJobs = homeService.GetAssignedJobs();
+        }
+    }
+}
