@@ -84,6 +84,7 @@ namespace htBLL
             {
                 ServiceDetails serviceDetails = ServiceDetails.Fetch((int)serviceRequest.ServiceDetailsId);
                 serviceDetails.CollectionDateTime = CollectionDateTime;
+                serviceDetails.EngineerUserId = EngineerUserId;
                 serviceDetails.MarkforUpdate();
                 serviceDetails.Save();
             }

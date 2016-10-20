@@ -624,15 +624,13 @@
                     visibility: 'hidden'
                     
                 },
-                ServiceDetailsId: {
-                    visibility: 'hidden'
-                },
                 RequestStatusID: {
                     title: 'Status',
                     options: '@Url.Action("GetRequestStatus")' 
                 },
-                UserName: {
-                    title: 'Assigned Engineer '
+                EngineerUserId: {
+                    title: 'Assigned Engineer ',
+                    options: '@Url.Action("GetEngineers")' 
                 },
             },
             recordUpdated: function (event, data) {

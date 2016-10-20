@@ -24,7 +24,7 @@ namespace HTAdmin.Controllers
             {
                 HomeService homeService = new HomeService();
 
-                var newRequests = homeService.GetNewRequests(RequestStatus.New);
+                var newRequests = homeService.GetRequestsByStatus(RequestStatus.New);
                 var newRequestsCount = newRequests.Count;
                 string[] sortParms = jtSorting.Split(' ');
                 //var newRequestsSorted = homeService.SortObjectList(newRequests, sortParms[0], sortParms[1]);
@@ -67,6 +67,20 @@ namespace HTAdmin.Controllers
             {
                 HomeService homeService = new HomeService();
                 var requestStatus = homeService.GetRequestStatus().Select(c => new { DisplayText = c.Description, Value = c.RequestStatusID }); ;
+                return Json(new { Result = "OK", Options = requestStatus });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        [HttpPost]
+        public JsonResult GetEngineers()
+        {
+            try
+            {
+                HomeService homeService = new HomeService();
+                var requestStatus = homeService.GetEngineers().Select(c => new { DisplayText = c.UserName, Value = c.UserId }); ;
                 return Json(new { Result = "OK", Options = requestStatus });
             }
             catch (Exception ex)
