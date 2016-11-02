@@ -14,6 +14,11 @@ namespace HTAdmin.Controllers.Book
         // GET: /BookSmartDevice/
        // public IEnumerable<SelectListItem> selectList;
 
+        public ActionResult DeviceDetailsFromLeftMenu()
+        {
+            return View("DeviceDetails", GetDeviceDetailsFromLeftMenu());
+        }
+
         public ActionResult DeviceDetails()
         {
             return View("DeviceDetails", GetDeviceDetails());
@@ -34,6 +39,19 @@ namespace HTAdmin.Controllers.Book
          public ActionResult RequestSaved()
          {
              return View();
+         }
+         private DeviceDetails GetDeviceDetailsFromLeftMenu()
+         {
+             ClearSmartDeviceSessions();
+             Session["DeviceDetails"] = new DeviceDetails();
+             return (DeviceDetails)Session["DeviceDetails"];
+         }
+         private void ClearSmartDeviceSessions()
+         {
+             Session["DeviceDetails"] = null;
+             Session["EquipmentInformation"] = null;
+             Session["CustomerInformation"] = null;
+             Session["RepairQuotes"] = null;
          }
         private DeviceDetails GetDeviceDetails()
         {
@@ -78,6 +96,29 @@ namespace HTAdmin.Controllers.Book
             Session.Remove("DeviceDetails");
         }
 
+
+        public JsonResult GetProductTypes()
+        {
+            int selectedProductTypeId = 0;
+            DeviceDetails obj = GetDeviceDetails();
+            if (obj != null)
+            {
+                if (obj.DeviceTypeID != 0)
+                {
+                    selectedProductTypeId = obj.ProductTypeId;//(obj.DeviceTypeID == null) ? 0 : (Int32)obj.DeviceTypeID;
+                }
+            }
+
+            BookSmartDeviceService bookSmartDeviceService = new BookSmartDeviceService();
+            var resultData = bookSmartDeviceService.GetAllProductType()
+                .Select(c => new { Value = c.ProductTypeId, Text = c.Name, Selected = (c.ProductTypeId == selectedProductTypeId) ? 1 : 0 }).ToList();
+
+
+            
+            return Json(new { result = resultData }, JsonRequestBehavior.AllowGet);
+            //list.Where(w => w.Name == "height").ToList().ForEach(s => s.Value = 30);
+        }
+
         public JsonResult GetDeviceTypes()
         {
             int selectedDeviceTypeId=0;
@@ -100,6 +141,27 @@ namespace HTAdmin.Controllers.Book
             //list.Where(w => w.Name == "height").ToList().ForEach(s => s.Value = 30);
         }
 
+        public JsonResult GetSearchChannels()
+        {
+            int selectedSearchChannelId = 0;
+            CustomerInformation obj = GetCustomerInformation();
+            if (obj != null)
+            {
+                if (obj.SearchChannelId != 0)
+                {
+                    selectedSearchChannelId = obj.SearchChannelId;//(obj.DeviceTypeID == null) ? 0 : (Int32)obj.DeviceTypeID;
+                }
+            }
+            //obj.lstSearchChannel
+            //BookSmartDeviceService bookSmartDeviceService = new BookSmartDeviceService();
+            var resultData = obj.lstSearchChannel
+                .Select(c => new { Value = c.SearchChannelId, Text = c.name, Selected = (c.SearchChannelId == selectedSearchChannelId) ? 1 : 0 }).ToList();
+
+
+
+            return Json(new { result = resultData }, JsonRequestBehavior.AllowGet);
+            //list.Where(w => w.Name == "height").ToList().ForEach(s => s.Value = 30);
+        }
         public JsonResult GetHandSetModel(int deviceTypeId)
         {
             int selectedHandsetModelID = 0;
@@ -114,6 +176,25 @@ namespace HTAdmin.Controllers.Book
 
             BookSmartDeviceService bookSmartDeviceService = new BookSmartDeviceService();
             var resultHandSetModels = bookSmartDeviceService.GetHandSetModelForDeviceType(deviceTypeId)
+                .Select(c => new { Value = c.HandsetModelId, Text = c.Name, Selected = (c.HandsetModelId == selectedHandsetModelID) ? 1 : 0 })
+                .ToList();
+            return Json(new { result = resultHandSetModels }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetHandSetModelNew(int deviceTypeId, int productTypeId)
+        {
+            int selectedHandsetModelID = 0;
+            DeviceDetails obj = GetDeviceDetails();
+            if (obj != null)
+            {
+                if (obj.HandsetModelID != 0)
+                {
+                    selectedHandsetModelID = obj.HandsetModelID; //(obj.HandsetModelID == null) ? 0 : (Int32)obj.HandsetModelID;
+                }
+            }
+
+            BookSmartDeviceService bookSmartDeviceService = new BookSmartDeviceService();
+            var resultHandSetModels = bookSmartDeviceService.GetHandSetModelForDeviceTypeNew(deviceTypeId,productTypeId)
                 .Select(c => new { Value = c.HandsetModelId, Text = c.Name, Selected = (c.HandsetModelId == selectedHandsetModelID) ? 1 : 0 })
                 .ToList();
             return Json(new { result = resultHandSetModels }, JsonRequestBehavior.AllowGet);
@@ -189,12 +270,13 @@ namespace HTAdmin.Controllers.Book
                 {
                     DeviceDetails obj = GetDeviceDetails();
                     obj.DeviceTypeID = int.Parse(fc["DeviceTypeID"]);
+                    obj.ProductTypeId = int.Parse(fc["ProductTypeId"]);
                     obj.HandsetModelID = int.Parse(fc["HandsetModelID"]);
                     obj.DeviceColourID = int.Parse(fc["DeviceColourID"]);
                     obj.IMEINo = fc["IMEINo"].ToString();
                     obj.PassCode = fc["PassCode"].ToString();
                     int selectedNetworkID = 0;
-                    obj.NetworkID = (int.TryParse(fc["ddlNetwork"], out selectedNetworkID))?selectedNetworkID:0;
+                    obj.NetworkID = (int.TryParse(fc["NetworkID"], out selectedNetworkID)) ? selectedNetworkID : 0;
 
                     return RedirectToAction("EquipmentInformation");
                     //SubmitDeviceDetails

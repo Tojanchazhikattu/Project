@@ -22,31 +22,34 @@
         <!-- Smart Wizard -->
         <p>Dummy text here</p>
         <div id="wizard" class="form_wizard wizard_horizontal">
+             <div id="step-1">
+            @using (Html.BeginForm("SubmitDeviceDetails", "BookSmartDevice", FormMethod.Post, new {@Id="deviceform", @class = "form-horizontal form-label-left" }))
+                    {
             <ul class="wizard_steps">
                 <li>
-                <a href="#step-1">
-                    <span class="step_no">1</span>
+                <a href="#"  class="selected">
+                    <span class="step_no" >1</span>
                     <span class="step_descr">
                                     Device Details<br />
-                                    <small>Fill Device Details</small>
+                                    <small>Fill Customer Device Details</small>
                                 </span>
                 </a>
                 </li>
                  <li>
-                <a href="#step-3">
-                    <span class="step_no">3</span>
+                <a href="#" id="linkToEquip">
+                    <span class="step_no">2</span>
                     <span class="step_descr">
-                                    Customer Information<br />
-                                    <small>Customer Information</small>
+                                    Equipment Information<br />
+                                    <small>Fill Equipment Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
-                <a href="#step-3">
+                <a href="#" id="linkToCustInfo">
                     <span class="step_no">3</span>
                     <span class="step_descr">
-                                    Step 3<br />
-                                    <small>Step 3 description</small>
+                                    Customer Information<br />
+                                    <small>Fill Customer Details</small>
                                 </span>
                 </a>
                 </li>
@@ -60,14 +63,13 @@
                 </a>
                 </li>
             </ul>
-            <div id="step-1">
+           
                 @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
-                    @using (Html.BeginForm("SubmitDeviceDetails", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
-                    {
+                    
                        @Html.ValidationSummary(true)
                 <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Device Type</label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Device Type<span class="required">*</span></label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     @*<select name="ddlDeviceType"  id="ddlDeviceType" class="select2_single form-control" 
                     tabindex="-1" onchange="javascript:GetHandSetModel(this.value);"></select> *@
@@ -83,7 +85,23 @@
                 </div>
                 </div>
                 <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Handset Model</label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Product Type<span class="required">*</span></label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @*<select name="ddlDeviceType"  id="ddlDeviceType" class="select2_single form-control" 
+                    tabindex="-1" onchange="javascript:GetHandSetModel(this.value);"></select> *@
+                    @Html.DropDownListFor(x=> x.ProductTypeId,
+                    new SelectList(
+                                  new List<Object>{ 
+                                       new { Value = "" , Text = "Select Product Type"  }
+                                  }, "Value","Text"
+                              ) ,new {@class = "select2_single form-control", Name = "ProductTypeId"
+                                  ,id="ProductTypeID" ,onchange="javascript:GetHandSetModelNew();" })
+                    @Html.ValidationMessageFor(model => model.ProductTypeId)
+@*                    new SelectList(Model.lstSearchChannel, "SearchChannelId", "name"),"Select Channel",new {@class = "select2_single form-control" })*@
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Handset Model<span class="required">*</span></label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
 
                @* <select name="ddlHandSetModel" class="select2_single form-control" tabindex="-1" id="ddlHandSetModel"></select>*@
@@ -100,7 +118,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Device Coluor<span class="required">*</span>
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                    @* <select name="ddlColour" class="select2_single form-control" tabindex="-1" id="ddlColour">   </select>*@
                          @Html.DropDownListFor(x=> x.DeviceColourID,
                     new SelectList(
@@ -115,29 +133,35 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">IMEI Number</label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">IMEI Number<span class="required">*</span></label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                     @*<input id="imei-number" class="form-control col-md-7 col-xs-12" type="text" name="imei-number" value="@Model.IMEINo">*@
-                        @Html.TextBoxFor(model => model.IMEINo)
+                        @Html.TextBoxFor(model => model.IMEINo, new { @class = "form-control col-md-7 col-xs-12" })
                         @Html.ValidationMessageFor(model => model.IMEINo)
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Pass Code</label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Pass Code<span class="required">*</span></label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
 @*                    <input id="pass-code" class="form-control col-md-7 col-xs-12" type="text" name="pass-code" value="@Model.PassCode">*@
-                         @Html.TextBoxFor(model => model.PassCode) 
+                         @Html.TextBoxFor(model => model.PassCode, new { @class = "form-control col-md-7 col-xs-12" }) 
                         @Html.ValidationMessageFor(model => model.PassCode)
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Network<span class="required">*</span>
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select name="ddlNetwork" class="select2_single form-control" tabindex="-1" id="ddlNetwork">
-                        </select>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
 
-                    </div>
+                     @Html.DropDownListFor(x=> x.NetworkID,
+                    new SelectList(
+                                  new List<Object>{ 
+                                       new { Value = "" , Text = "Select Network"  }
+                                  }, "Value","Text"
+                              ) ,new {@class = "select2_single form-control", Name = "NetworkID"
+                                  ,id="NetworkID"  })
+                    @Html.ValidationMessageFor(model => model.NetworkID)
+                   </div>
                 </div>
 
                 </div>
@@ -146,6 +170,7 @@
                  @*  <a href="#" class="btn btn-default buttonDisabled">Finish</a>*@
                  @*  <a href="#" class="btn btn-success">Next</a>*@
                    <input name="submit" type="submit" id="Next" class="btn btn-success"  value="Next" />
+                   <input name="submit" type="submit" id="step3" class="btn btn-success"  value="step3" style="display:none" />
                   @* <a href="#" class="btn btn-primary buttonDisabled">Previous</a>*@
                </div>
                     }
@@ -174,6 +199,9 @@
      $.getJSON('@Url.Action("GetDeviceTypes", "BookSmartDevice")', function (result) {
          FillDropdown("DeviceTypeID", result.result, "Device Type")
      });
+      $.getJSON('@Url.Action("GetProductTypes", "BookSmartDevice")', function (result) {
+          FillDropdown("ProductTypeID", result.result, "Product Type")
+            });
     $.getJSON('@Url.Action("GetHandSetModelSelected", "BookSmartDevice")', function (result) {
         FillDropdown("HandsetModelID", result.result, "HandSet Model")
     });
@@ -181,15 +209,25 @@
         FillDropdown("DeviceColourID", result.result, "Colour")
     });
     $.getJSON('@Url.Action("GetNetworks", "BookSmartDevice")', function (result) {
-        FillDropdown("ddlNetwork", result.result, "Network")
+        FillDropdown("NetworkID", result.result, "Network")
     });
+
+        $('a#linkToEquip').click(function () {
+            var nextBtn = $("#Next");
+            nextBtn.click();
+        });
+        
+        //$('a#linkToCustInfo').click(function () {
+        //    var step3Btn = $("#step3");
+        //    step3Btn.click();
+        //});
  });
 
     // Generic code for any dropdown to fill called by ajax  
     function FillDropdown(selector, vData,defaultValue) {
         if (vData.length > 0) {
             var vItems = [];
-            vItems.push("<option >Selected " + defaultValue + "</option>");
+            vItems.push("<option value='' >Select " + defaultValue + "</option>");
             for (var i in vData) {
                 if (vData[i].Selected) {
                    
@@ -208,19 +246,57 @@
         }
     }
 
-    function GetHandSetModel(_deviceTypeId) {
-       
+    function GetHandSetModelNew() {
         var procemessage = "<option value='0'> Please wait...</option>";
         $("#HandsetModelID").html(procemessage).show();
-        var url = "@Url.Action("GetHandSetModel", "BookSmartDevice")";
-
+        var url = "@Url.Action("GetHandSetModelNew", "BookSmartDevice")";
+        var _deviceTypeId = 0;
+        var _productTypeID = 0;
+        if ($('#DeviceTypeID').val() > 0)
+        { _deviceTypeId = $('#DeviceTypeID').val(); }
+        if ($('#ProductTypeID').val() > 0)
+        { _productTypeID = $('#ProductTypeID').val(); }
+        var stateId = $('#State').val();
         $.ajax({
             url: url,
-            data: { deviceTypeId: _deviceTypeId },
+            data: { deviceTypeId: _deviceTypeId , productTypeID :_productTypeID},
             cache: false,
             type: "POST",
             success: function (data) {
-                var markup = "<option value='0'>Select HandSet Model</option>";
+                var markup = "<option value=''>Select HandSet Model</option>";
+                //alert(data.result.length);
+                for (var x = 0; x < data.result.length; x++) {
+                    markup += "<option value=" + data.result[x].Value + ">" + data.result[x].Text + "</option>";
+                }
+                $("#HandsetModelID").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+    function GetHandSetModel() {
+        var _deviceTypeId = 0;
+        var _productTypeID = 0;
+        if ($('#DeviceTypeID').val() > 0)
+        { _deviceTypeId = $('#DeviceTypeID').val(); }
+        if ($('#ProductTypeID').val() > 0)
+        { _productTypeID = $('#ProductTypeID').val(); }
+
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#HandsetModelID").html(procemessage).show();
+        @*var url = "@Url.Action("GetHandSetModel", "BookSmartDevice")";*@
+        //data: { deviceTypeId: _deviceTypeId },
+        var url = "@Url.Action("GetHandSetModelNew", "BookSmartDevice")";
+
+        $.ajax({
+            url: url,
+            data: { deviceTypeId: _deviceTypeId, productTypeID: _productTypeID },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value=''>Select HandSet Model</option>";
                 //alert(data.result.length);
                 for (var x = 0; x < data.result.length; x++) {
                     markup += "<option value=" + data.result[x].Value + ">" + data.result[x].Text + "</option>";

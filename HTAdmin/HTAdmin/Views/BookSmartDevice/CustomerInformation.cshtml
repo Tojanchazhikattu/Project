@@ -4,6 +4,7 @@
     @model htBLL.CustomerInformation
 }
 
+
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
     <div class="x_title">
@@ -19,101 +20,113 @@
     <div class="x_content">
 
         <div id="wizard" class="form_wizard wizard_horizontal">
+             <div id="step3">
+                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
+                    @using (Html.BeginForm("SubmitCustomerInformation", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                    {
             <ul class="wizard_steps">
                 <li>
                 <a href="#step-1">
                     <span class="step_no">1</span>
-                    <span class="step_descr">
+                   <span class="step_descr">
                                     Device Details<br />
-                                    <small>Fill Device Details</small>
+                                    <small>Fill Customer Device Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
-                <a href="#step-2">
+                <a href="#" id="linkToEquip">
                     <span class="step_no">2</span>
                     <span class="step_descr">
-                                    Address Details<br />
-                                    <small>Fill Address Details</small>
+                                    Equipment Information<br />
+                                    <small>Fill Equipment Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
-                <a href="#step-3">
+                <a href="#step-3" class="selected">
                     <span class="step_no">3</span>
-                    <span class="step_descr">
+                     <span class="step_descr">
                                     Customer Information<br />
-                                    <small>Customer Information</small>
+                                    <small>Fill Customer Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
-                <a href="#step-4">
+                <a href="#" id="linkToRepair">
                     <span class="step_no">4</span>
-                    <span class="step_descr">
+                   <span class="step_descr">
                                     Repair Quotes<br />
                                     <small>Fill Repair Quotes</small>
                                 </span>
                 </a>
                 </li>
             </ul>
-            <div id="step-1">
-                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
-                    @using (Html.BeginForm("SubmitCustomerInformation", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
-                    {
-                   
+           
+                   @Html.ValidationSummary(true)
                 <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">How did you find us?</label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-@*                    <select name="ddlDeviceType"  id="ddlDeviceType" class="select2_single form-control" tabindex="-1" onchange="javascript:GetHandSetModel(this.value);">  
-                    </select> *@
-                   @* Model.Select(i => i.CompanyName).Distinct().ToList()*@
-                    @Html.DropDownListFor(x=> x.SearchChannelId,new SelectList(Model.lstSearchChannel, "SearchChannelId", "name"),"Select Channel",new {@class = "select2_single form-control" })
+                <label class="control-label col-md-4 col-sm-3 col-xs-12">How did you find us?</label>
+                <div class="col-md-8 col-sm-9 col-xs-12">
+
+@*                    @Html.DropDownListFor(x=> x.SearchChannelId,new SelectList(Model.lstSearchChannel, "SearchChannelId", "name")
+                    ,"Select Channel",new {@class = "select2_single form-control" , Name = "SearchChannelId"
+                                  ,id="SearchChannelId"})*@
+
+                     @Html.DropDownListFor(x=> x.SearchChannelId,
+                    new SelectList(
+                                  new List<Object>{ 
+                                       new { Value = "0" , Text = "Select Channel"  }
+                                  }, "Value","Text"
+                              ) ,new {@class = "select2_single form-control", Name = "SearchChannelId"
+                                  ,id="SearchChannelId"  })
+                     @Html.ValidationMessageFor(model => model.SearchChannelId)
                      
                 </div>
                 </div>
                 <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
+                <label class="control-label col-md-4 col-sm-3 col-xs-12">First Name<span class="required">*</span></label>
+                <div class="col-md-8 col-sm-9 col-xs-12">
 
-                 @Html.TextBoxFor(model => model.FirstName)
-
+                 @Html.TextBoxFor(model => model.FirstName,new { @class = "form-control col-md-7 col-xs-12 valid" })
+                @Html.ValidationMessageFor(model => model.FirstName)
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name<span class="required">*</span>
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Sur Name<span class="required">*</span>
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.LastName)
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.LastName,new { @class = "form-control col-md-7 col-xs-12 valid" })
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Contact No<span class="required">*</span></label>
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                   @Html.TextBoxFor(model => model.ContactNo,new { @class = "form-control col-md-7 col-xs-12 valid" })
+                         @Html.ValidationMessageFor(model => model.ContactNo)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Email<span class="required">*</span></label>
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                   @Html.TextBoxFor(model => model.Email,new { @class = "form-control col-md-7 col-xs-12 valid" })
+                         @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Address
+                    </label>
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                   @Html.TextBoxFor(model => model.Address,new { @class = "form-control col-md-7 col-xs-12 valid" })
 
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Contact No</label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                   @Html.TextBoxFor(model => model.ContactNo)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                   @Html.TextBoxFor(model => model.Email)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address<span class="required">*</span>
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Post code
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                   @Html.TextBoxFor(model => model.Address)
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Post code<span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                   @Html.TextBoxFor(model => model.PostCode)
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                   @Html.TextBoxFor(model => model.PostCode,new { @class = "form-control col-md-7 col-xs-12 valid" })
 
                     </div>
                 </div>
@@ -138,6 +151,52 @@
     </div>
     </div>
 </div>
+
+  @section Scripts
+ {
+         @Scripts.Render("~/bundles/jqueryval")
+}
+ 
+<script> 
+    $(document).ready(function () {
+     $.getJSON('@Url.Action("GetSearchChannels", "BookSmartDevice")', function (result) {
+         FillDropdown("SearchChannelId", result.result, "Search Channel")
+     });
+
+        $('a#linkToEquip').click(function () {
+            var prevBtn = $("#Prev");
+            prevBtn.click();
+        });
+
+        $('a#linkToRepair').click(function () {
+            var nextBtn = $("#Next");
+            nextBtn.click();
+        });
+    });
+
+    // Generic code for any dropdown to fill called by ajax  
+    function FillDropdown(selector, vData, defaultValue) {
+        if (vData.length > 0) {
+            var vItems = [];
+            vItems.push("<option value='0' >Select " + defaultValue + "</option>");
+            for (var i in vData) {
+                if (vData[i].Selected) {
+
+                    vItems.push('<option selected value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+                }
+                else
+                    vItems.push('<option value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+            }
+            $('#' + selector).empty();
+            $('#' + selector).append(vItems.join(''));
+            return true;
+        }
+        else {
+            $('#' + selector).empty();
+            return false;
+        }
+    }
+</script>
 
 
 

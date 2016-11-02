@@ -19,6 +19,7 @@ namespace HTAdmin
         public IList<User> lstEngineers;
         public List<int> lstSelectedRepairs { get; set; }
         //RepairTypeId will be used in ServiceRequest
+         [Required(ErrorMessage = "Please select Repair Type")]
         public int RepairTypeId { get; set; }
         public IEnumerable<SelectListItem> slSmartDeviceRepair;
         

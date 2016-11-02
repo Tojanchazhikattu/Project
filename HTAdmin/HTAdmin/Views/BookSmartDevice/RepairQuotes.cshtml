@@ -22,6 +22,10 @@
         <!-- Smart Wizard -->
         <p>Dummy text here</p>
         <div id="wizard" class="form_wizard wizard_horizontal">
+            <div id="step-4">
+                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
+                    @using (Html.BeginForm("SubmitRepairQuotes", "BookSmartDevice", FormMethod.Post, new {@id="step4form", @class = "form-horizontal form-label-left" }))
+                    {
             <ul class="wizard_steps">
                 <li>
                 <a href="#step-1">
@@ -34,24 +38,24 @@
                 </li>
                  <li>
                 <a href="#step-3">
+                    <span class="step_no">2</span>
+                   <span class="step_descr">
+                                    Equipment Information<br />
+                                    <small>Fill Equipment Details</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#" id="linkToCust">
                     <span class="step_no">3</span>
-                    <span class="step_descr">
+                  <span class="step_descr">
                                     Customer Information<br />
-                                    <small>Customer Information</small>
+                                    <small>Fill Customer Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
-                <a href="#step-3">
-                    <span class="step_no">3</span>
-                    <span class="step_descr">
-                                    Step 3<br />
-                                    <small>Step 3 description</small>
-                                </span>
-                </a>
-                </li>
-                <li>
-                <a href="#step-4">
+                <a href="#step-4" class="selected">
                     <span class="step_no">4</span>
                     <span class="step_descr">
                                     Repair Quotes<br />
@@ -60,22 +64,20 @@
                 </a>
                 </li>
             </ul>
-            <div id="step-4">
-                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
-                    @using (Html.BeginForm("SubmitRepairQuotes", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
-                    {
-                   
+            
+                   @Html.ValidationSummary(true)
                     <div class="col-md-8 col-sm-6 col-xs-12">
                     <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Repair or Unlocking?</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                         @Html.DropDownListFor(x=> x.RepairTypeId,new SelectList(Model.lstRepairType, "RepairTypeId", "Name"),"Select RepairType"
+                         @Html.DropDownListFor(x=> x.RepairTypeId,new SelectList(Model.lstRepairType, "RepairTypeId", "Name",Model.RepairTypeId),"Select RepairType"
                          ,new {id= "ddlRepairType", @class = "select2_single form-control"})
+                         @Html.ValidationMessageFor(model => model.RepairTypeId)
                     </div>
                     </div>
                     <div id="partialViewDiv">
-
-
+                       @* @Html.Action("GetRepairTypeView", "BookSmartDevice",new { @selectedValue= "1" })*@
+                        
                     </div>
                     </div>
                 
@@ -100,6 +102,11 @@
     </div>
     </div>
 </div>
+
+  @section Scripts
+ {
+         @Scripts.Render("~/bundles/jqueryval")
+}
 <script> 
     $(document).ready(function () {
 
@@ -107,30 +114,61 @@
             FillDropdown("ddlDeviceType", result.result, "Device Type")
         });*@
 
-        var dropDown = $('#ddlRepairType'); // assuming the ID of this element is 'TypeId'             
+        var dropDown = $('#ddlRepairType'); // assuming the ID of this element is 'TypeId'    
+        if (dropDown.val()>0)
+        {
+            populateView(dropDown.val());
+        }
         dropDown.change(function () {
             //alert(dropDown.val());
             populateView(dropDown.val());
         });
+        
+        $('a#linkToCust').click(function () {
+            var prevBtn = $("#Prev");
+            prevBtn.click();
+        });
 
-
+        //$("#Prev").click(function () {
+           
+        //    $("form").validate();
+        //    if ($("form").valid()) {
+               
+        //        return true;
+        //    } else {
+           
+        //        return false;
+        //    }
+        //});
+     
     });
 
     function populateView(dropDownval) {
         var url = "@Url.Action("GetRepairTypeView", "BookSmartDevice")";
-        if (dropDownval>0) {
+        if (dropDownval > 0) {
             $.ajax({
                 method: "GET",
                 cache: false,
                 url: url,
                 dataType: "HTML",
                 data: { selectedValue: dropDownval }
+
             })
+
         .done(function (response) { // jQuery 1.8 deprecates success() callback
             var div = $('#partialViewDiv');
             div.html('');
             div.html(response);
+
+            $("form").each(function () { $.data($(this)[0], 'validator', false); });
+            $.validator.unobtrusive.parse("form");
+
         });
+        
+        }
+        else {
+            var div = $('#partialViewDiv');
+            div.html('');
         }
     }
     

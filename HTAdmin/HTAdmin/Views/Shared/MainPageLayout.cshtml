@@ -189,6 +189,13 @@
   <script type="text/javascript" src="/js/maps/jquery-jvectormap-world-mill-en.js"></script>
   <script type="text/javascript" src="/js/maps/jquery-jvectormap-us-aea-en.js"></script>
   <!-- pace -->
+
+      <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+      <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+      <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
   <script src="/js/pace/pace.min.js"></script>
   <script>
       $(function () {
@@ -351,6 +358,9 @@
   <!-- /datepicker -->
   <!-- /footer content -->
      @RenderSection("scripts", required: false)
+    @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 </body>
 
 </html>

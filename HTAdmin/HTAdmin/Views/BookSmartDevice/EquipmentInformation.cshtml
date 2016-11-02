@@ -22,105 +22,112 @@
         <!-- Smart Wizard -->
         <p>Dummy text here</p>
         <div id="wizard" class="form_wizard wizard_horizontal">
+            <div id="divEquipmentInformation">
+                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
+                    @using (Html.BeginForm("SubmitEquipmentInformation", "BookSmartDevice", FormMethod.Post, new {@id = "equipForm", @class = "form-horizontal form-label-left" }))
+                    {
             <ul class="wizard_steps">
                 <li>
-                <a href="#step-1">
+                <a href="#" id="linkToDevice">
                     <span class="step_no">1</span>
-                    <span class="step_descr">
+                     <span class="step_descr">
                                     Device Details<br />
-                                    <small>Fill Device Details</small>
+                                    <small>Fill Customer Device Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
-                <a href="#step-2">
+                <a href="#step-2" class="selected">
                     <span class="step_no">2</span>
                     <span class="step_descr">
                                     Equipment Information<br />
-                                    <small>Fill Equipment Information</small>
+                                    <small>Fill Equipment Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
-                <a href="#step-3">
+                <a href="#" id="linkToCustInfo">
                     <span class="step_no">3</span>
                     <span class="step_descr">
                                     Customer Information<br />
-                                    <small>Fill Customer Information</small>
+                                    <small>Fill Customer Details</small>
                                 </span>
                 </a>
                 </li>
                 <li>
                 <a href="#step-4">
                     <span class="step_no">4</span>
-                    <span class="step_descr">
+                      <span class="step_descr">
                                     Repair Quotes<br />
                                     <small>Fill Repair Quotes</small>
                                 </span>
                 </a>
                 </li>
             </ul>
-            <div id="divEquipmentInformation">
-                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
-                    @using (Html.BeginForm("SubmitEquipmentInformation", "BookSmartDevice", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
-                    {
+            
                    
+                        @Html.ValidationSummary(true)
                 <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Handset</label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
+                <label class="control-label col-md-4 col-sm-3 col-xs-12">Handset</label>
+                <div class="col-md-8 col-sm-9 col-xs-12">
 
                     @Html.RadioButtonFor(model =>model.Handset,true,true) Yes 
                     @Html.RadioButtonFor(model =>model.Handset,false,true) No 
+                     @Html.ValidationMessageFor(model => model.Handset)
 
                 </div>
                 </div>
                 <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Simcard</label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
+                <label class="control-label col-md-4 col-sm-3 col-xs-12">Simcard</label>
+                <div class="col-md-8 col-sm-9 col-xs-12">
 
                 
                     @Html.RadioButtonFor(model =>model.Simcard,true,true) Yes 
                     @Html.RadioButtonFor(model =>model.Simcard,false,true) No 
+                    @Html.ValidationMessageFor(model => model.Simcard)
 
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Memory Card<span class="required">*</span>
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Memory Card
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-8 col-sm-6 col-xs-12">
                     @Html.RadioButtonFor(model =>model.MemoryCard,true,true) Yes 
                     @Html.RadioButtonFor(model =>model.MemoryCard,false,true) No 
-
+                        @Html.ValidationMessageFor(model => model.MemoryCard)
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Battery</label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Battery</label>
+                    <div class="col-md-8 col-sm-6 col-xs-12">
                      @Html.RadioButtonFor(model =>model.Battery,true,true) Yes 
                     @Html.RadioButtonFor(model =>model.Battery,false,true) No 
+                         @Html.ValidationMessageFor(model => model.Battery)
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Back Cover</label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                    <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Back Cover</label>
+                    <div class="col-md-8 col-sm-6 col-xs-12">
                     @Html.RadioButtonFor(model =>model.BackCover,true,true) Yes 
                     @Html.RadioButtonFor(model =>model.BackCover,false,true) No
+                       @Html.ValidationMessageFor(model => model.BackCover)
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Other Accessories
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Other Accessories
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.OtherAccessories)
-
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.OtherAccessories, new { @class = "form-control col-md-7 col-xs-12 valid" } )
+                       
                     </div>
                 </div>
 
                 </div>
                 
                <div class="actionBar">
-                   <input name="submit" type="submit" id="Prev" class="btn btn-success"  value="Prev" />
+                   <input name="submit" type="submit" id="Prev" class="btn btn-success"  value="Prev"  />
                  @*  <a href="#" class="btn btn-success">Next</a>*@
                    <input name="submit" type="submit" id="Next" class="btn btn-success"  value="Next" />
                   @* <a href="#" class="btn btn-primary buttonDisabled">Previous</a>*@
@@ -138,8 +145,24 @@
     </div>
     </div>
 </div>
+
+  @section Scripts
+ {
+         @Scripts.Render("~/bundles/jqueryval")
+}
+ 
 <script> 
+    $(document).ready(function () {
 
-     
-</script>
+        $('a#linkToDevice').click(function () {
+            var prevBtn = $("#Prev");
+            prevBtn.click();
+        });
 
+        $('a#linkToCustInfo').click(function () {
+            var nextBtn = $("#Next");
+            nextBtn.click();
+        });
+
+    });
+    </script>
