@@ -17,12 +17,7 @@ namespace htBLL
         [Required(ErrorMessage = "Please select SearchChannelId")]
         public int SearchChannelId { get; set; }
         public string SearchChannelstrId { get; set; }
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string ContactNo { get; set; }
-        //public string Email { get; set; }
-        //public string Address { get; set; }
-        //public string PostCode { get; set; }
+       
 
         public int CustomerInformationId { get; set; }
         [Required(ErrorMessage = "Please enter customer First Name")]

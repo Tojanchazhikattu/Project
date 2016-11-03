@@ -20,12 +20,5 @@ namespace HTAdmin
         }
     }
 
-    //public class FieldModel
-    //{
-    //    [Display(Name = "Property")]
-    //    public string PropertyName { get; set; }
-
-    //    [Display(Name = "Value")]
-    //    public string PropertyValue { get; set; }
-    //}
+    
 }

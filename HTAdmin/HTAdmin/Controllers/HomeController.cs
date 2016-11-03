@@ -16,9 +16,7 @@ namespace HTAdmin.Controllers
             return View("Index", new HomeModel());
         }
 
-        
-
-            [HttpPost]
+         [HttpPost]
         public JsonResult GetAssignedRequestList(int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
         {
             try

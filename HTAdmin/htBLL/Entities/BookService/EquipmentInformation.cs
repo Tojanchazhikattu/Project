@@ -18,7 +18,6 @@ namespace htBLL
         public bool Battery { get; set; }
         [Required]
         public bool BackCover { get; set; }
-       
         public string OtherAccessories { get; set; }       
     }
 }

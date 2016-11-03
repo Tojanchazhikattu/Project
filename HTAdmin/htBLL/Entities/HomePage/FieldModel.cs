@@ -12,7 +12,6 @@ namespace htBLL
 {
     public class FieldModel
     {
-
         public string PropertyName { get; set; }
 
         public string PropertyValue { get; set; }

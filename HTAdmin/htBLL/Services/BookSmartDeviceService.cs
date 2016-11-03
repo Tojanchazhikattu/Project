@@ -39,8 +39,7 @@ namespace htBLL
             {
                 lstHandSetModels = lstHandSetModels.Where(s => (s.ProductTypeId == productTypeId)).ToList();
             }
-            //var lstHandSetModelsForDeviceType = lstHandSetModels.Where(s => (s.DeviceTypeId == deviceTypeId) && (s.ProductTypeId == productTypeId)).ToList();
-            //return lstHandSetModelsForDeviceType;
+
             return lstHandSetModels;
         }
         

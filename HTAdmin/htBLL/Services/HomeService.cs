@@ -37,7 +37,7 @@ namespace htBLL
         }
         public IList<ServiceRequestsComposite> GetRequestsByStatus(RequestStatus status)
         {
-           // var NewRequests = ServiceRequestsComposite.FetchAll().Where(s => s.RequestStatusID == (int)status).ToList();
+           
             var NewRequests = serviceRequestsComposite.Where(s => s.RequestStatusID == (int)status).ToList();
             return NewRequests;
             //return ServiceRequestsComposite.FetchAll();

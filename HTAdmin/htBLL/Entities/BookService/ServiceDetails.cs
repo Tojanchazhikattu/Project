@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace htBLL
 {
+
     public class ServiceDetails : BusinessBase<ServiceDetails>
     {
         #region Instance Properties

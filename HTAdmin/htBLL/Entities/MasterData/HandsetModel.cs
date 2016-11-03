@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using htDAL;
 
-
 namespace htBLL
 {
     public class HandsetModel : BusinessBase<HandsetModel>
