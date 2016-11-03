@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using htDAL;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace htBLL
 {
@@ -16,7 +16,11 @@ namespace htBLL
 
         public int ServiceDetailsId { get; set; }
 
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Please select CollectionDateTime")]
+        [DisplayFormat(DataFormatString = "{0:s}")]
         public DateTime? CollectionDateTime { get; set; }
+
 
         public int? EngineerUserId { get; set; }
 

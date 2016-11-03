@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using htDAL;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace htBLL
@@ -13,7 +14,9 @@ namespace htBLL
     public class CustomerInformation : BusinessBase<CustomerInformation>
     {
         //SearchChannelId is part of ServiceRequest
-        public int? SearchChannelId { get; set; }
+        [Required(ErrorMessage = "Please select SearchChannelId")]
+        public int SearchChannelId { get; set; }
+        public string SearchChannelstrId { get; set; }
         //public string FirstName { get; set; }
         //public string LastName { get; set; }
         //public string ContactNo { get; set; }
@@ -22,13 +25,14 @@ namespace htBLL
         //public string PostCode { get; set; }
 
         public int CustomerInformationId { get; set; }
-
+        [Required(ErrorMessage = "Please enter customer First Name")]
         public String FirstName { get; set; }
-
+        [Required(ErrorMessage = "Please enter customer SurName")]
         public String LastName { get; set; }
-
+        [Required(ErrorMessage = "Please enter customer contact no")]
         public String ContactNo { get; set; }
-
+        [Required(ErrorMessage = "Please enter customer email")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public String Email { get; set; }
 
         public String Address { get; set; }

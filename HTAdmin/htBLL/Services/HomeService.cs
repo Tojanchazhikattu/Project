@@ -8,15 +8,37 @@ namespace htBLL
 {
     public class HomeService
     {
+        public IList<ServiceRequestsComposite> serviceRequestsComposite { get; set; }
+        public HomeService()
+        {
+            serviceRequestsComposite = ServiceRequestsComposite.FetchAll();
+        }
         public IList<AssignedJobs> GetAssignedJobs()
         {
             IList<AssignedJobs> lstAssignedJobs = AssignedJobs.FetchAll();
             return lstAssignedJobs;
         }
 
+        public IList<FieldModel> GetOrdersByStatus()
+        {
+            FieldModel fieldModel;
+            IList<FieldModel> lstOrderCountByStatus = new List<FieldModel>();
+            foreach(var request in serviceRequestsComposite.GroupBy(info => info.RequestStatusID)
+                        .Select(group => new { 
+                             RequestStatusID = group.Key, 
+                             Count = group.Count() 
+                        })
+                        .OrderBy(x => x.RequestStatusID))
+            {
+                fieldModel = new FieldModel(request.RequestStatusID.ToString(), request.Count.ToString());
+                lstOrderCountByStatus.Add(fieldModel);
+            }
+            return lstOrderCountByStatus;
+        }
         public IList<ServiceRequestsComposite> GetRequestsByStatus(RequestStatus status)
         {
-            var NewRequests = ServiceRequestsComposite.FetchAll().Where(s => s.RequestStatusID == (int)status).ToList();
+           // var NewRequests = ServiceRequestsComposite.FetchAll().Where(s => s.RequestStatusID == (int)status).ToList();
+            var NewRequests = serviceRequestsComposite.Where(s => s.RequestStatusID == (int)status).ToList();
             return NewRequests;
             //return ServiceRequestsComposite.FetchAll();
         }

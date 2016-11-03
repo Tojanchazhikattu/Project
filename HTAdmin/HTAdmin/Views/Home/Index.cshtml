@@ -147,10 +147,10 @@
 			<div class="" role="tabpanel" data-example-id="togglable-tabs">
 				<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#tab_content1" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false" onclick="clickNewTab()">New
-					<span class="label label-default">14</span>
+					<span class="label label-default">@Model.lstOrdersByStatus.Where(x=> x.PropertyName=="1").First().PropertyValue</span>
 					</a></li>
-                    <li role="presentation" class=""><a href="#tab_content2" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true" onclick="clickUnresolvedTab()">Unresolved
-					<span class="label label-danger">42</span>
+                    <li role="presentation" class=""><a href="#tab_content2" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true" onclick="clickUnresolvedTab()">Assigned
+					<span class="label label-danger">@Model.lstOrdersByStatus.Where(x=> x.PropertyName=="2").First().PropertyValue</span>
 					</a></li>
 					<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">In-Progress
 					<span class="label label-info">35</span>
@@ -195,6 +195,7 @@
 										
 										<div class="x_content">
                                             <div id="NewRequestContainer"></div>
+
 											@*<table class="table table-striped responsive-utilities jambo_table bulk_action">
 												<thead>
 												<tr class="headings">
@@ -511,8 +512,9 @@
 							</div>                 
 
                       <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                          booth letterpress, commodo enim craft beer mlkshk aliquip</p>
+                       @* <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
+                          booth letterpress, commodo enim craft beer mlkshk aliquip</p>*@
+                          <div id="AssignedRequestContainer"></div>
                       </div>
                       <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                         <p>333 truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
@@ -578,10 +580,64 @@
         </div>
 <script type="text/javascript">
     function clickNewTab() {
-        alert("new tab");
+       // alert("new tab");
     }
     function clickUnresolvedTab() {
-        alert("click Unresolved Tab");
+        //alert("click Unresolved Tab");
+        //AssignedRequestContainer
+        $('#AssignedRequestContainer').jtable({
+            title: 'Assigned',
+            paging: true, //Enable paging
+            sorting: true, //Enable sorting
+            defaultSorting: 'ServiceRequestId ASC',
+            actions: {
+                listAction: '@Url.Action("GetAssignedRequestList")',
+                updateAction: '@Url.Action("UpdateAssignedRequestList")'
+            },
+            fields: {
+                ServiceRequestId: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: true,
+                    title: 'Job No',
+                },
+                FirstName: {
+                    title: 'Customer Name',
+                    edit: false
+                },
+                CreatedDate: {
+                    title: 'Date Booked',
+                    type: 'date',
+                    edit: false
+                },
+                CollectionDateTimeDisplay: {
+                    title: 'Collection Time',
+                    create: false,
+                    edit: false
+                },
+                CollectionDateTime: {
+                    title: 'Collection Time',
+                    type: 'date',
+                    visibility: 'hidden'
+
+                },
+                RequestStatusID: {
+                    title: 'Status',
+                    options: '@Url.Action("GetRequestStatus")'
+                },
+                EngineerUserId: {
+                    title: 'Assigned Engineer ',
+                    options: '@Url.Action("GetEngineers")'
+                },
+            },
+            recordUpdated: function (event, data) {
+                if (data.record) {
+                    $('#AssignedRequestContainer').jtable('load');
+                }
+            }
+        });
+        $('#AssignedRequestContainer').jtable('load');
     }
 
  

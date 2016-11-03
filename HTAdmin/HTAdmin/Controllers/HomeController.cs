@@ -16,6 +16,28 @@ namespace HTAdmin.Controllers
             return View("Index", new HomeModel());
         }
 
+        
+
+            [HttpPost]
+        public JsonResult GetAssignedRequestList(int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
+        {
+            try
+            {
+                HomeService homeService = new HomeService();
+                var newRequests = homeService.GetRequestsByStatus(RequestStatus.AssignedToEngineer);
+                var newRequestsCount = newRequests.Count;
+                string[] sortParms = jtSorting.Split(' ');
+                //var newRequestsSorted = homeService.SortObjectList(newRequests, sortParms[0], sortParms[1]);
+
+
+                return Json(new { Result = "OK", Records = newRequests, TotalRecordCount = newRequestsCount });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
 
         [HttpPost]
         public JsonResult GetNewRequestList(int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
@@ -23,7 +45,6 @@ namespace HTAdmin.Controllers
             try
             {
                 HomeService homeService = new HomeService();
-
                 var newRequests = homeService.GetRequestsByStatus(RequestStatus.New);
                 var newRequestsCount = newRequests.Count;
                 string[] sortParms = jtSorting.Split(' ');

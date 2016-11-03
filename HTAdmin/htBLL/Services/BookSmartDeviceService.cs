@@ -14,12 +14,36 @@ namespace htBLL
             return lstDeviceTypes;
         }
 
+
+        public IList<ProductType> GetAllProductType()
+        {
+            IList<ProductType> lstProductTypes = ProductType.FetchAll();
+            return lstProductTypes;
+        }
+
         public IList<HandsetModel> GetHandSetModelForDeviceType(int? deviceTypeId)
         {
             IList<HandsetModel> lstHandSetModels = HandsetModel.FetchAll();
             var lstHandSetModelsForDeviceType = lstHandSetModels.Where(s => s.DeviceTypeId == deviceTypeId).ToList();
             return lstHandSetModelsForDeviceType;
         }
+        public IList<HandsetModel> GetHandSetModelForDeviceTypeNew(int? deviceTypeId, int? productTypeId)
+        {
+
+            IList<HandsetModel> lstHandSetModels = HandsetModel.FetchAll();
+            if (deviceTypeId.HasValue && deviceTypeId > 0)
+            {
+                lstHandSetModels = lstHandSetModels.Where(s => (s.DeviceTypeId == deviceTypeId)).ToList();
+            }
+            if(productTypeId.HasValue && productTypeId > 0)
+            {
+                lstHandSetModels = lstHandSetModels.Where(s => (s.ProductTypeId == productTypeId)).ToList();
+            }
+            //var lstHandSetModelsForDeviceType = lstHandSetModels.Where(s => (s.DeviceTypeId == deviceTypeId) && (s.ProductTypeId == productTypeId)).ToList();
+            //return lstHandSetModelsForDeviceType;
+            return lstHandSetModels;
+        }
+        
 
         public IList<Colour> GetColours()
         {
@@ -45,6 +69,7 @@ namespace htBLL
             {
 
                 int customerInformationId = customerInformation.SaveAndReturnID();
+               
                 int serviceDetailID = serviceDetails.SaveAndReturnID();
                 ServiceRepairMapping mapping;
                 foreach (int SelectedRepair in lstSelectedRepairs)
@@ -68,7 +93,8 @@ namespace htBLL
                 serviceRequest.Battery = equipmentInformation.Battery;
                 serviceRequest.BackCover = equipmentInformation.BackCover;
                 serviceRequest.OtherAccessories = equipmentInformation.OtherAccessories;
-                serviceRequest.SearchChannelId = customerInformation.SearchChannelId;
+                if (customerInformation.SearchChannelId>0)
+                    serviceRequest.SearchChannelId = customerInformation.SearchChannelId;
                 serviceRequest.RepairTypeId = repairTypeId;
                 serviceRequest.CustomerInformationId = customerInformationId;
                 serviceRequest.SetPropertySet("CustomerInformationId");
@@ -76,7 +102,11 @@ namespace htBLL
                 serviceRequest.SetPropertySet("ServiceDetailsId");
                 serviceRequest.ServiceRequestTypeId = 1; // smart device
                 serviceRequest.CreatedDate = serviceRequest.LastUpdatedDate= DateTime.Now;
-                serviceRequest.RequestStatusID = (int)RequestStatus.New;
+                if (serviceDetails.EngineerUserId.HasValue)
+                    serviceRequest.RequestStatusID = (int)RequestStatus.AssignedToEngineer;
+                else
+                    serviceRequest.RequestStatusID = (int)RequestStatus.New;
+                
 
 
                 //serviceRequest.MarkAsDirty();

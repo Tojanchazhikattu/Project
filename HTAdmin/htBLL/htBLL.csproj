@@ -56,6 +56,7 @@
     <Compile Include="Entities\BookService\ServiceRequest.cs" />
     <Compile Include="Entities\BookService\UnLocking.cs" />
     <Compile Include="Entities\HomePage\AssignedJobs.cs" />
+    <Compile Include="Entities\HomePage\FieldModel.cs" />
     <Compile Include="Entities\HomePage\ServiceRequestsComposite.cs" />
     <Compile Include="Entities\MasterData\Colour.cs" />
     <Compile Include="Entities\MasterData\DeviceType.cs" />
