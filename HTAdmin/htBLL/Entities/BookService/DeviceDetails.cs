@@ -23,7 +23,15 @@ namespace htBLL
         [Required(ErrorMessage = "Please enter PassCode")]
         public string PassCode { get; set; }
         [Required(ErrorMessage = "Please select Network")]
-        public int NetworkID { get; set; }          
+        public int NetworkID { get; set; }
+
+        //For Computer
+        [Display(Name = "Serial No")]
+        [Required(ErrorMessage = "Please Serial No")]
+        public string SerialNo { get; set; }
+        [Display(Name = "Ant-virus Expiry Date")]
+        [DisplayFormat(DataFormatString = "{0:s}")]
+        public DateTime AntivirusExpiryDate { get; set; }
     }
 }
 

@@ -32,7 +32,7 @@ namespace htBLL
         {
             lstSmartDeviceRepair = SmartDeviceRepair.FetchAll().Where(s => s.DeviceTypeId == deviceTypeId).ToList();
 
-            lstEngineers = User.FetchAll().Where(s => s.UserTypeId == 2 && s.Status == 1).ToList();
+            lstEngineers = User.FetchAll().Where(s => s.UserTypeId == 2 && s.IsActive == 1).ToList();
             lstSelectedRepairs = new List<int>();
         }
 

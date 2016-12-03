@@ -1,0 +1,46 @@
+﻿@{
+
+     @model HTAdmin.RepairQuotes
+ 
+}
+@if (this.ViewContext.FormContext == null) 
+{
+    this.ViewContext.FormContext = new FormContext(); 
+}
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Repair Description</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        @Html.ListBoxFor(x => x.lstSelectedRepairs, new MultiSelectList(Model.slSmartDeviceRepair, "Value", "Text",Model.lstSelectedRepairs), new { id = "ddlRepairType" })
+    </div>
+</div>
+ <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Other Repair</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+    @Html.TextAreaFor(model => model.serviceDetails.OtherRepair) € @Html.TextBoxFor(model => model.serviceDetails.OtherRepairCost)
+         @Html.ValidationMessageFor(model => model.serviceDetails.OtherRepairCost)
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Collection Date/Time<span class="required">*</span></label>
+     <div class="col-md-9 col-sm-9 col-xs-12">
+      @Html.TextBoxFor(model => model.serviceDetails.CollectionDateTime,"{0:s}", new { type="datetime-local" , id= "CollectionDateTime", name="CollectionDateTime"})
+          @Html.ValidationMessageFor(model => model.serviceDetails.CollectionDateTime)
+    
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Message To Engineer</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      @Html.TextAreaFor(model => model.serviceDetails.MessageToEngineer)
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Assigned Engineer</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+    @Html.DropDownListFor(x=> x.serviceDetails.EngineerUserId,new SelectList(Model.lstEngineers, "UserId", "UserName",Model.serviceDetails.EngineerUserId),"Select Engineer"
+                     ,new {id= "ddlRepairType", @class = "select2_single form-control"})
+       @Html.ValidationMessageFor(model => model.serviceDetails.EngineerUserId)
+
+    </div>
+</div>
+

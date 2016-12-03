@@ -13,8 +13,9 @@ namespace htBLL
     public enum RequestStatus : int
     {
         New = 1,
-        AssignedToEngineer=2
-
+        AssignedToEngineer=2,
+        InProcess=3,
+        Completed=4
     }
     public class ServiceRequest : BusinessBase<ServiceRequest>
     {

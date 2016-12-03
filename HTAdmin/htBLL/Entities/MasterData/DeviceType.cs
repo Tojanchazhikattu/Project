@@ -18,6 +18,7 @@ namespace htBLL
         public String Name { get; set; }
 
         public String Description { get; set; }
+        public int DeviceGroupId { get; set; }
 
         #endregion Instance Properties
 
@@ -148,6 +149,7 @@ namespace htBLL
                 if (!dataRow.IsNull("DeviceTypeId")) DeviceTypeId = Convert.ToInt32(dataRow["DeviceTypeId"]);
                 if (!dataRow.IsNull("Name")) Name = Convert.ToString(dataRow["Name"]);
                 if (!dataRow.IsNull("Description")) Description = Convert.ToString(dataRow["Description"]);
+                if (!dataRow.IsNull("DeviceGroupId")) DeviceGroupId = Convert.ToInt32(dataRow["DeviceGroupId"]);
             }
 
         }

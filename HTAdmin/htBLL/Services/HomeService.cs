@@ -50,7 +50,7 @@ namespace htBLL
         }
         public IList<User> GetEngineers()
         {
-            var lstEngineers = User.FetchAll().Where(s => s.UserTypeId == 2 && s.Status == 1).ToList();
+            var lstEngineers = User.FetchAll().Where(s => s.UserTypeId == 2 && s.IsActive == 1).ToList();
             return lstEngineers;
         }
 

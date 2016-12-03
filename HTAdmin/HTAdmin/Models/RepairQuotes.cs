@@ -29,7 +29,7 @@ namespace HTAdmin
         {
             lstRepairType = RepairType.FetchAll();
             lstSelectedRepairs = new List<int>();
-            lstEngineers = User.FetchAll().Where(s => s.UserTypeId == 2 && s.Status == 1).ToList();
+            lstEngineers = User.FetchAll().Where(s => s.UserTypeId == 2 && s.IsActive == 1).ToList();
             serviceDetails = new ServiceDetails();
         }
         public void initializeRepair(int? deviceTypeID)

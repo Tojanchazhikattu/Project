@@ -16,6 +16,8 @@ namespace htBLL
         public string UserName { get; set; }
         public int New { get; set; }
         public int AssignedToEngineer { get; set; }
+        public int InProcess { get; set; }
+        public int Completed { get; set; }
 
         public AssignedJobs()
         {
@@ -43,6 +45,9 @@ namespace htBLL
                 if (!dataRow.IsNull("UserName")) UserName = Convert.ToString(dataRow["UserName"]);
                 if (!dataRow.IsNull("New")) New = Convert.ToInt32(dataRow["New"]);
                 if (!dataRow.IsNull("AssignedToEngineer")) AssignedToEngineer = Convert.ToInt32(dataRow["AssignedToEngineer"]);
+                if (!dataRow.IsNull("InProcess")) InProcess = Convert.ToInt32(dataRow["InProcess"]);
+                if (!dataRow.IsNull("Completed")) Completed = Convert.ToInt32(dataRow["Completed"]);
+
             }
 
         }

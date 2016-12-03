@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "RepairQuotes";
+    Layout = "~/Views/Shared/MainPageLayout.cshtml";
+    @model HTAdmin.RepairQuotes
+}
+     @if (this.ViewContext.FormContext == null)
+     {
+         this.ViewContext.FormContext = new FormContext();
+     }
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+    <div class="x_title">
+        <h2>Repair Quotes <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+
+        <!-- Smart Wizard -->
+        <p>Dummy text here</p>
+        <div id="wizard" class="form_wizard wizard_horizontal">
+            <div id="step-4">
+                @*<form method="post" class="form-horizontal form-label-left" action="DeviceDetails" >*@
+                    @using (Html.BeginForm("SubmitRepairQuotes", "BookComputer", FormMethod.Post, new { @id = "step4form", @class = "form-horizontal form-label-left" }))
+                    {
+            <ul class="wizard_steps">
+                <li>
+                <a href="#step-1">
+                    <span class="step_no">1</span>
+                    <span class="step_descr">
+                                    Device Details<br />
+                                    <small>Fill Device Details</small>
+                                </span>
+                </a>
+                </li>
+                 <li>
+                <a href="#step-3">
+                    <span class="step_no">2</span>
+                   <span class="step_descr">
+                                    Equipment Information<br />
+                                    <small>Fill Equipment Details</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#" id="linkToCust">
+                    <span class="step_no">3</span>
+                  <span class="step_descr">
+                                    Customer Information<br />
+                                    <small>Fill Customer Details</small>
+                                </span>
+                </a>
+                </li>
+                <li>
+                <a href="#step-4" class="selected">
+                    <span class="step_no">4</span>
+                    <span class="step_descr">
+                                    Repair Quotes<br />
+                                    <small>Fill Repair Quotes</small>
+                                </span>
+                </a>
+                </li>
+            </ul>
+            
+                   @Html.ValidationSummary(true)
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                    
+               
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Repair Description</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.ListBoxFor(x => x.lstSelectedRepairs, new MultiSelectList(Model.slSmartDeviceRepair, "Value", "Text", Model.lstSelectedRepairs), new { id = "ddlRepairType" })
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Other Repair</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextAreaFor(model => model.serviceDetails.OtherRepair) € @Html.TextBoxFor(model => model.serviceDetails.OtherRepairCost)
+                             @Html.ValidationMessageFor(model => model.serviceDetails.OtherRepairCost)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Collection Date/Time<span class="required">*</span></label>
+                         <div class="col-md-9 col-sm-9 col-xs-12">
+                          @Html.TextBoxFor(model => model.serviceDetails.CollectionDateTime, "{0:s}", new { type = "datetime-local", id = "CollectionDateTime", name = "CollectionDateTime" })
+                              @Html.ValidationMessageFor(model => model.serviceDetails.CollectionDateTime)
+    
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Message To Engineer</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          @Html.TextAreaFor(model => model.serviceDetails.MessageToEngineer)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Assigned Engineer</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.serviceDetails.EngineerUserId, new SelectList(Model.lstEngineers, "UserId", "UserName", Model.serviceDetails.EngineerUserId), "Select Engineer"
+                                         , new { id = "ddlRepairType", @class = "select2_single form-control" })
+                           @Html.ValidationMessageFor(model => model.serviceDetails.EngineerUserId)
+
+                        </div>
+                    </div>
+                
+                   <div class="actionBar">
+                      @* <a href="#" class="btn btn-default buttonDisabled">Finish</a>*@
+                       <input name="submit" type="submit" id="Prev" class="btn btn-success"  value="Previous" />
+                       <input name="submit" type="submit" id="Finish"  class="btn btn-success"  value="Finish" />
+                     @*  <a href="#" class="btn btn-success">Next</a>*@
+           @*         <input name="submit" type="submit" id="Previous"  class="btn btn-success"  value="Previous" />*@
+                      @* <a href="#" class="btn btn-primary buttonDisabled">Previous</a>*@
+                   </div>
+                   
+        
+
+                    </div>
+                    }
+
+         </div>
+        <div>
+
+        </div>
+    </div>
+    </div>
+</div>
+
+  @section Scripts
+ {
+         @Scripts.Render("~/bundles/jqueryval")
+}
+<script> 
+    $(document).ready(function () {
+
+@*        $.getJSON('@Url.Action("GetRepairTypes", "BookSmartDevice")', function (result) {
+            FillDropdown("ddlDeviceType", result.result, "Device Type")
+        });*@
+
+        var dropDown = $('#ddlRepairType'); // assuming the ID of this element is 'TypeId'    
+        if (dropDown.val()>0)
+        {
+            populateView(dropDown.val());
+        }
+        dropDown.change(function () {
+            //alert(dropDown.val());
+            populateView(dropDown.val());
+        });
+        
+        $('a#linkToCust').click(function () {
+            var prevBtn = $("#Prev");
+            prevBtn.click();
+        });
+
+        //$("#Prev").click(function () {
+           
+        //    $("form").validate();
+        //    if ($("form").valid()) {
+               
+        //        return true;
+        //    } else {
+           
+        //        return false;
+        //    }
+        //});
+     
+    });
+
+    function populateView(dropDownval) {
+        var url = "@Url.Action("GetRepairTypeView", "BookSmartDevice")";
+        if (dropDownval > 0) {
+            $.ajax({
+                method: "GET",
+                cache: false,
+                url: url,
+                dataType: "HTML",
+                data: { selectedValue: dropDownval }
+
+            })
+
+        .done(function (response) { // jQuery 1.8 deprecates success() callback
+            var div = $('#partialViewDiv');
+            div.html('');
+            div.html(response);
+
+            $("form").each(function () { $.data($(this)[0], 'validator', false); });
+            $.validator.unobtrusive.parse("form");
+
+        });
+        
+        }
+        else {
+            var div = $('#partialViewDiv');
+            div.html('');
+        }
+    }
+    
+    function FillDropdown(selector, vData, defaultValue) {
+        if (vData.length > 0) {
+            var vItems = [];
+            vItems.push("<option value='0'>Select " + defaultValue + "</option>");
+            for (var i in vData) {
+                if (vData[i].Selected)
+                    vItems.push('<option selectedselected=selected value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+                else
+                    vItems.push('<option value="' + vData[i].Value + '">' + vData[i].Text + '</option>');
+            }
+            $('#' + selector).empty();
+            $('#' + selector).append(vItems.join(''));
+            return true;
+        }
+        else {
+            $('#' + selector).empty();
+            return false;
+        }
+    }
+
+
+   
+     
+</script>
+
+

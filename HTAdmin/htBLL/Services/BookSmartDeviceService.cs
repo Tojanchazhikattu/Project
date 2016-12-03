@@ -10,7 +10,7 @@ namespace htBLL
     {
         public IList<DeviceType> GetAllDeviceType()
         {
-            IList<DeviceType> lstDeviceTypes = DeviceType.FetchAll();
+            IList<DeviceType> lstDeviceTypes = DeviceType.FetchAll().Where(s => s.DeviceGroupId == 1).ToList<DeviceType>();
             return lstDeviceTypes;
         }
 
